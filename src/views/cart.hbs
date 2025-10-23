@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    {{> header}}
+
+    <div class="container mt-5">
+        <h1>Your Shopping Cart</h1>
+        {{#if cart.products.length}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cart.products}}
+                        <tr>
+                            <td>{{this.product.name}}</td>
+                            <td>${{this.product.price}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>${{this.product.price * this.quantity}}</td>
+                            <td>
+                                <form action="/cart/remove/{{this.product._id}}" method="POST">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <h3>Total: ${{cart.totalAmount}}</h3>
+            <a href="/checkout" class="btn btn-primary">Proceed to Checkout</a>
+        {{else}}
+            <p>Your cart is empty. Start adding products!</p>
+            <a href="/products" class="btn btn-secondary">Browse Products</a>
+        {{/if}}
+    </div>
+
+    {{> footer}}
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
