@@ -1,5 +1,4 @@
 const Order = require('../models/order');
-const User = require('../models/user');
 
 // Create a new order
 exports.createOrder = async (req, res) => {
@@ -11,7 +10,7 @@ exports.createOrder = async (req, res) => {
             userId,
             products,
             totalAmount,
-            status: 'Pending'
+            status: 'Pending',
         });
 
         await newOrder.save();
@@ -21,23 +20,22 @@ exports.createOrder = async (req, res) => {
     }
 };
 
-// Retrieve all orders for a user
+// Get all orders for a user
 exports.getUserOrders = async (req, res) => {
     try {
         const userId = req.user._id;
         const orders = await Order.find({ userId });
-
         res.status(200).json({ orders });
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving orders', error });
     }
 };
 
-// Retrieve a specific order by ID
+// Get a specific order by ID
 exports.getOrderById = async (req, res) => {
     try {
-        const { Orderid } = req.params;
-        const order = await Order.findById(Orderid);
+        const { orderId } = req.params; // match route param
+        const order = await Order.findById(orderId);
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
@@ -55,11 +53,7 @@ exports.updateOrderStatus = async (req, res) => {
         const { orderId } = req.params;
         const { status } = req.body;
 
-        const order = await Order.findByIdAndUpdate(
-            orderId,
-            { status },
-            { new: true }
-        );
+        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
@@ -75,7 +69,6 @@ exports.updateOrderStatus = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
-
         const order = await Order.findByIdAndDelete(orderId);
 
         if (!order) {
