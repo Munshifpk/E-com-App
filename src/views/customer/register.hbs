@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Create Account - E-Commerce</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    {{ header}}
+
+    <main class="register-page">
+        <section class="split-layout">
+            <!-- Left: Big-site illustration / trust messaging -->
+            <aside class="illustration-panel" aria-hidden="false">
+                <div class="brand">
+                    <svg width="44" height="44" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                        <rect width="48" height="48" rx="10" fill="#FF7A7A" />
+                        <path d="M14 30L24 18l10 12" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <h1>ShopSphere</h1>
+                </div>
+
+                <div class="hero-illustration" role="img" aria-label="Happy customers shopping on a large online store">
+                    <!-- decorative SVG blob + shopping illustrations -->
+                    <svg class="blob" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="gA" x1="0" x2="1">
+                                <stop offset="0" stop-color="#FF7A7A" />
+                                <stop offset="1" stop-color="#FFB86B" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M300,50 C420,50 560,170 560,300 C560,430 420,550 300,550 C180,550 40,430 40,300 C40,170 180,50 300,50Z"
+                            fill="url(#gA)" />
+                    </svg>
+
+                    <div class="mall">
+                        <img src="/images/illustration-shopping.png" alt="" aria-hidden="true">
+                    </div>
+                </div>
+
+                <div class="trust">
+                    <h2>Join millions of happy customers</h2>
+                    <p>Secure checkout • 24/7 support • Fast delivery</p>
+                    <ul class="trust-badges">
+                        <li><i class="fas fa-shield-alt"></i> Secure</li>
+                        <li><i class="fas fa-truck"></i> Fast Delivery</li>
+                        <li><i class="fas fa-star"></i> Top Rated</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Right: Registration form -->
+            <aside class="form-panel" aria-labelledby="create-account-title">
+                <div class="card">
+                    <h2 id="create-account-title">Create your account</h2>
+                    <p class="muted">Quick sign up to start shopping on the biggest marketplace</p>
+
+                    <form id="registerForm" action="/customer/register" method="POST" novalidate>
+                        <label class="field">
+                            <span class="label">Full name</span>
+                            <div class="control">
+                                <span class="icon"><i class="fas fa-user"></i></span>
+                                <input name="name" type="text" placeholder="Jane Doe" required autocomplete="name">
+                            </div>
+                        </label>
+
+                        <label class="field">
+                            <span class="label">Email</span>
+                            <div class="control">
+                                <span class="icon"><i class="fas fa-envelope"></i></span>
+                                <input name="email" type="email" placeholder="you@example.com" required
+                                    autocomplete="email">
+                            </div>
+                        </label>
+
+                        <label class="field">
+                            <span class="label">Phone (optional)</span>
+                            <div class="control">
+                                <span class="icon"><i class="fas fa-phone"></i></span>
+                                <input name="phone" type="tel" placeholder="+1 555 0123" autocomplete="tel">
+                            </div>
+                        </label>
+
+                        <label class="field password-field">
+                            <span class="label">Password</span>
+                            <div class="control">
+                                <span class="icon"><i class="fas fa-lock"></i></span>
+                                <input id="password" name="password" type="password" placeholder="Create password"
+                                    required autocomplete="new-password" minlength="8">
+                                <button type="button" class="pw-toggle" aria-label="Show password"><i
+                                        class="fas fa-eye"></i></button>
+                            </div>
+                            <meter id="pw-strength" min="0" max="4" low="2" high="3" optimum="4" value="0"></meter>
+                            <small class="hint">Use 8+ characters with letters & numbers.</small>
+                        </label>
+
+                        <label class="field">
+                            <span class="label">Confirm password</span>
+                            <div class="control">
+                                <span class="icon"><i class="fas fa-lock"></i></span>
+                                <input id="confirmPassword" name="confirmPassword" type="password"
+                                    placeholder="Repeat password" required autocomplete="new-password" minlength="8">
+                            </div>
+                            <small class="error" id="confirmError" aria-live="polite" hidden>Passwords do not
+                                match.</small>
+                        </label>
+
+                        <label class="checkbox">
+                            <input id="agree" name="agree" type="checkbox" required>
+                            <span>I agree to the <a href="/terms" target="_blank">Terms & Privacy</a></span>
+                        </label>
+
+                        <button id="submitBtn" class="btn primary" type="submit">Create account</button>
+
+                        <div class="alt">
+                            <div class="divider"><span>or sign up with</span></div>
+                            <div class="socials">
+                                <a class="btn social google" href="/auth/google"><i class="fab fa-google"></i>
+                                    Google</a>
+                                <a class="btn social facebook" href="/auth/facebook"><i class="fab fa-facebook-f"></i>
+                                    Facebook</a>
+                            </div>
+                        </div>
+
+                        <p class="small">Already have an account? <a href="/customer/login">Sign in</a></p>
+                    </form>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    {{> footer}}
+
+    <script>
+        (function () {
+            const pw = document.getElementById('password');
+            const cpw = document.getElementById('confirmPassword');
+            const toggle = document.querySelector('.pw-toggle');
+            const meter = document.getElementById('pw-strength');
+            const confirmError = document.getElementById('confirmError');
+            const form = document.getElementById('registerForm');
+
+            function scorePassword(s) {
+                let score = 0;
+                if (!s) return 0;
+                if (s.length >= 8) score++;
+                if (/[A-Z]/.test(s)) score++;
+                if (/[0-9]/.test(s)) score++;
+                if (/[^A-Za-z0-9]/.test(s)) score++;
+                return Math.min(score, 4);
+            }
+
+            if (toggle && pw) {
+                toggle.addEventListener('click', () => {
+                    pw.type = pw.type === 'password' ? 'text' : 'password';
+                    toggle.innerHTML = pw.type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                });
+            }
+
+            if (pw && meter) {
+                pw.addEventListener('input', () => {
+                    meter.value = scorePassword(pw.value);
+                });
+            }
+
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    confirmError.hidden = true;
+                    if (pw.value !== cpw.value) {
+                        e.preventDefault();
+                        confirmError.hidden = false;
+                        cpw.focus();
+                    }
+                });
+
+                // client-side nice UX: hide error as user types
+                cpw.addEventListener('input', () => {
+                    confirmError.hidden = (pw.value === cpw.value);
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

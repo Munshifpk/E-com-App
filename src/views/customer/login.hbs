@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Login - E-Commerce</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    {{ header}}
+
+    <main class="login-page">
+        <section class="login-split">
+            <div class="illustration">
+                <div class="promo">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to continue shopping exclusive deals and fast checkout.</p>
+                    <a href="/products" class="ghost-btn"><i class="fas fa-shopping-bag"></i> Browse as Guest</a>
+                </div>
+                <div class="shapes">
+                    <!-- decorative SVGs/gradients for a modern look -->
+                    <svg class="shape" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="g1" x1="0" x2="1">
+                                <stop offset="0" stop-color="#FF7A7A" />
+                                <stop offset="1" stop-color="#FFB86B" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M300,50 C420,50 560,170 560,300 C560,430 420,550 300,550 C180,550 40,430 40,300 C40,170 180,50 300,50Z"
+                            fill="url(#g1)" />
+                    </svg>
+                </div>
+            </div>
+
+            <div class="login-card">
+                <div class="card-header">
+                    <h2>Sign in to your account</h2>
+                    <p class="muted">Customers — fast, secure and easy.</p>
+                </div>
+
+                <form class="login-form" action="/login" method="POST" novalidate>
+                    <label class="input-group">
+                        <span class="icon"><i class="fas fa-envelope"></i></span>
+                        <input name="email" type="email" placeholder="Email address" required autocomplete="email">
+                    </label>
+
+                    <label class="input-group password-group">
+                        <span class="icon"><i class="fas fa-lock"></i></span>
+                        <input id="password" name="password" type="password" placeholder="Password" required
+                            autocomplete="current-password">
+                        <button type="button" class="pw-toggle" aria-label="Toggle password"><i
+                                class="fas fa-eye"></i></button>
+                    </label>
+
+                    <div class="row options">
+                        <label class="remember">
+                            <input type="checkbox" name="remember"> Remember me
+                        </label>
+                        <a class="forgot" href="/forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button class="btn primary" type="submit">Sign In</button>
+
+                    <div class="divider"><span>or continue with</span></div>
+
+                    <div class="socials">
+                        <a class="btn social google" href="/auth/google"><i class="fab fa-google"></i> Google</a>
+                        <a class="btn social facebook" href="/auth/facebook"><i class="fab fa-facebook-f"></i>
+                            Facebook</a>
+                    </div>
+
+                    <p class="signup-link">New customer? <a href="/register">Create an account</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    {{> footer}}
+
+    <script>
+        // Password toggle
+        (function () {
+            const btn = document.querySelector('.pw-toggle');
+            const pw = document.getElementById('password');
+            if (btn && pw) {
+                btn.addEventListener('click', () => {
+                    const type = pw.type === 'password' ? 'text' : 'password';
+                    pw.type = type;
+                    btn.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,34 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - E-Commerce</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
-    {{> header}}
+    {{ header}}
 
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Our Store</h1>
+            <p class="hero-subtitle">Discover Amazing Deals Today</p>
+            <a href="/products" class="cta-button">Shop Now</a>
+        </div>
+    </div>
+
+    <!-- Featured Products Section -->
     <div class="container mt-5">
-        <h1>Welcome to Our E-Commerce Store</h1>
-        <p>Discover our featured products below:</p>
+        <div class="section-header">
+            <h2>Featured Products</h2>
+            <p>Hand-picked products just for you</p>
+        </div>
 
-        <div class="row">
+        <div class="row product-grid">
             {{#each products}}
-                <div class="col-md-4">
-                    <div class="card mb-4">
-                        <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{this.name}}</h5>
-                            <p class="card-text">${{this.price}}</p>
-                            <a href="/products/{{this._id}}" class="btn btn-primary">View Details</a>
+            <div class="col-md-4">
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="{{this.image}}" alt="{{this.name}}">
+                        <div class="hover-overlay">
+                            <a href="/products/{{this._id}}" class="quick-view">
+                                <i class="fas fa-eye"></i> Quick View
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">{{this.name}}</h3>
+                        <div class="product-price">${{this.price}}</div>
+                        <div class="product-actions">
+                            <a href="/products/{{this._id}}" class="btn-details">View Details</a>
+                            <button class="btn-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
+            </div>
             {{/each}}
         </div>
     </div>
 
+    <!-- Categories Section -->
+    <div class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+            </div>
+            <div class="category-grid">
+                <div class="category-card">
+                    <img src="/images/electronics.jpg" alt="Electronics">
+                    <h3>Electronics</h3>
+                </div>
+                <div class="category-card">
+                    <img src="/images/fashion.jpg" alt="Fashion">
+                    <h3>Fashion</h3>
+                </div>
+                <div class="category-card">
+                    <img src="/images/home.jpg" alt="Home & Living">
+                    <h3>Home & Living</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get updates about new products and special offers</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
     {{> footer}}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/main.js"></script>
 </body>
+
 </html>
